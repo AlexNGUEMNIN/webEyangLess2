@@ -1,0 +1,166 @@
+<!-- Payment Reservation Modal -->
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+  <div class="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+    
+    <!-- Header -->
+    <div class="flex justify-between items-start p-6 border-b border-gray-200">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900 mb-2">Payer les frais de réservation</h1>
+        <p class="text-gray-600">Procédez à la réservation de votre chambre</p>
+      </div>
+      <button 
+        (click)="onClose()"
+        class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Left Column - Payment Form -->
+        <div class="space-y-6">
+          <h2 class="text-xl font-semibold text-gray-900">Formulaire de réservation</h2>
+          
+          <!-- Reservation Fee -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-700">Frais de réservation</span>
+              <span class="text-2xl font-bold text-teal-500">{{ formatPrice(reservationData.reservationFee) }} FCFA</span>
+            </div>
+          </div>
+
+          <!-- Payment Method -->
+          <div class="space-y-4">
+            <h3 class="text-lg font-medium text-gray-900">Mode de paiement</h3>
+            
+            <div class="space-y-3">
+              <!-- Orange Money -->
+              <label class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors duration-200"
+                     [class.border-teal-500]="selectedPaymentMethod === 'orange'"
+                     [class.bg-teal-50]="selectedPaymentMethod === 'orange'"
+                     [class.border-gray-200]="selectedPaymentMethod !== 'orange'">
+                <div class="flex items-center flex-1">
+                  <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
+                    <span class="text-white font-bold text-lg">OM</span>
+                  </div>
+                  <span class="text-gray-900 font-medium">Orange Money</span>
+                </div>
+                <input 
+                  type="radio" 
+                  name="paymentMethod" 
+                  value="orange"
+                  [checked]="selectedPaymentMethod === 'orange'"
+                  (change)="onPaymentMethodChange('orange')"
+                  class="w-5 h-5 text-teal-500 focus:ring-teal-500"
+                >
+              </label>
+
+              <!-- MTN Mobile Money -->
+              <label class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors duration-200"
+                     [class.border-teal-500]="selectedPaymentMethod === 'mtn'"
+                     [class.bg-teal-50]="selectedPaymentMethod === 'mtn'"
+                     [class.border-gray-200]="selectedPaymentMethod !== 'mtn'">
+                <div class="flex items-center flex-1">
+                  <div class="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center mr-4">
+                    <span class="text-black font-bold text-lg">MM</span>
+                  </div>
+                  <span class="text-gray-900 font-medium">MTN Mobile Money</span>
+                </div>
+                <input 
+                  type="radio" 
+                  name="paymentMethod" 
+                  value="mtn"
+                  [checked]="selectedPaymentMethod === 'mtn'"
+                  (change)="onPaymentMethodChange('mtn')"
+                  class="w-5 h-5 text-teal-500 focus:ring-teal-500"
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">
+              Numéro de téléphone pour la transaction
+            </label>
+            <input 
+              type="tel"
+              [(ngModel)]="phoneNumber"
+              (input)="onPhoneNumberChange()"
+              placeholder="Entrer un numéro de téléphone"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200"
+              [class.border-red-500]="phoneNumber && !isPhoneValid"
+              [class.border-green-500]="isPhoneValid"
+            >
+            @if (phoneNumber && !isPhoneValid) {
+              <p class="text-red-500 text-sm mt-1">Format invalide. Utilisez le format: 6XXXXXXXX</p>
+            }
+          </div>
+
+          <!-- Notice -->
+          <div class="flex items-start space-x-3 p-4 bg-blue-50 rounded-lg">
+            <svg class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+            </svg>
+            <p class="text-blue-700 text-sm">Aucun frais supplémentaire ne sera déduit.</p>
+          </div>
+
+          <!-- Pay Button -->
+          <button 
+            (click)="onPay()"
+            [disabled]="!isFormValid()"
+            class="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-200 text-lg"
+          >
+            Payer
+          </button>
+        </div>
+
+        <!-- Right Column - Reservation Summary -->
+        <div class="space-y-6">
+          <h2 class="text-xl font-semibold text-gray-900">Résumé de la réservation</h2>
+          
+          <!-- Summary Card -->
+          <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+            <div class="flex justify-between items-center py-2 border-b border-gray-200">
+              <span class="text-gray-600">Cité</span>
+              <span class="font-semibold text-gray-900">{{ reservationData.cityName }}</span>
+            </div>
+            
+            <div class="flex justify-between items-center py-2 border-b border-gray-200">
+              <span class="text-gray-600">Prix de la chambre</span>
+              <span class="font-semibold text-gray-900">{{ formatPrice(reservationData.roomPrice) }} FCFA</span>
+            </div>
+            
+            <div class="flex justify-between items-center py-2">
+              <span class="text-gray-600">Numéro de chambre</span>
+              <span class="font-semibold text-gray-900">{{ reservationData.roomNumber }}</span>
+            </div>
+          </div>
+
+          <!-- Warning Notice -->
+          <div class="bg-yellow-100 border border-yellow-300 rounded-lg p-6">
+            <div class="flex items-start space-x-3">
+              <div class="flex-shrink-0">
+                <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-yellow-800 mb-2">Délai de 7 jours (1 semaine)</h3>
+                <div class="text-yellow-700 text-sm space-y-2">
+                  <p>Une fois les frais de réservation payés, vous disposerez d'un délai de <strong>7 jours</strong> pour payer le montant requis pour valider votre location.</p>
+                  <p>Passé ce délai et votre chambre sera de nouveau libre et réservable par d'autres utilisateurs.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

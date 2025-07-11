@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { DetailCityComponent } from './pages/website/detail-city/detail-city.component';
-import { AppComponent } from './app.component';
+import { WebsiteComponent } from './pages/website/website-component/website.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: AppComponent
+    redirectTo: '/website',
+    pathMatch: 'full'
   },
   {
-    path: 'detail-city',
-    component: DetailCityComponent
+    path: 'website',
+    loadChildren: () => import('./pages/website/website.module').then(m => m.WebsiteModule)
   }
 ];

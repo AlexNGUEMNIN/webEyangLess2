@@ -1,0 +1,66 @@
+/* Payment Reservation Styles */
+
+.modal-overlay {
+  backdrop-filter: blur(4px);
+}
+
+.payment-method-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.payment-method-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.payment-method-card.selected {
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+}
+
+/* Phone input animations */
+.phone-input {
+  transition: all 0.2s ease-in-out;
+}
+
+.phone-input:focus {
+  transform: translateY(-1px);
+}
+
+/* Button animations */
+.pay-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.pay-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .modal-content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-content {
+    margin: 0.5rem;
+    max-height: calc(100vh - 1rem);
+    border-radius: 1rem;
+  }
+  
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .payment-method-card {
+    padding: 1rem;
+  }
+  
+  .payment-method-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

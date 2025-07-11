@@ -1,0 +1,62 @@
+/* Payment Verification Styles */
+
+.loading-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Custom spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Pulse animation for inner circle */
+@keyframes pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Bounce animation for dots */
+@keyframes bounce {
+  0%, 80%, 100% { 
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.bounce-dot {
+  animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.bounce-dot:nth-child(1) { animation-delay: -0.32s; }
+.bounce-dot:nth-child(2) { animation-delay: -0.16s; }
+.bounce-dot:nth-child(3) { animation-delay: 0s; }
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .loading-text h1 {
+    font-size: 1.5rem;
+  }
+  
+  .loading-text p {
+    font-size: 0.875rem;
+  }
+  
+  .spinner {
+    width: 3rem;
+    height: 3rem;
+  }
+}

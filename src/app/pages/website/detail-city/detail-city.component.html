@@ -68,7 +68,12 @@
           <p class="text-xs">Profitez-en pour réserver votre chambre dès maintenant !</p>
         </div>
         <div>
-          <button class="bg-white hover:bg-transparent rounded-full px-3 py-2 duration-200 text-black">Réserver</button>
+          <button 
+            class="bg-white hover:bg-transparent rounded-full px-3 py-2 duration-200 text-black"
+            (click)="onReserve()"
+          >
+            Réserver
+          </button>
         </div>
       </div>
       
@@ -186,7 +191,10 @@
       
     </div>
 
-    <button class="bg-appgreen hover:bg-darkgreen duration-200 text-white rounded-xl w-full py-3 font-semibold my-2">
+    <button 
+      class="bg-appgreen hover:bg-darkgreen duration-200 text-white rounded-xl w-full py-3 font-semibold my-2"
+      (click)="onReserve()"
+    >
       Réserver
     </button>
 

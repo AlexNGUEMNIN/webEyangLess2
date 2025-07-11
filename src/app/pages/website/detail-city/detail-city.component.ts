@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 interface Photo {
   id: number;
@@ -19,7 +19,7 @@ export class DetailCityComponent {
 
   currentImageIndex = 0;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -61,5 +61,9 @@ export class DetailCityComponent {
   onShowAllPhotos(): void {
     console.log('Show all photos clicked');
     // Implement show all photos logic here
+  }
+
+  onReserve(): void {
+    this.router.navigate(['/website/room-selection']);
   }
 }

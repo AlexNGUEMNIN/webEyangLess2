@@ -5,6 +5,11 @@ import { CitiesComponent } from "./cities/cities.component";
 import { AproposComponent } from "./apropos/apropos.component";
 import { WebsiteComponent } from "./website-component/website.component";
 import { DetailCityComponent } from "./detail-city/detail-city.component";
+import { RoomSelectionComponent } from "./room-selection/room-selection.component";
+import { PaymentReservationComponent } from "./payment-reservation/payment-reservation.component";
+import { PaymentVerificationComponent } from "./payment-verification/payment-verification.component";
+import { PaymentSuccessComponent } from "./payment-success/payment-success.component";
+import { PaymentFailedComponent } from "./payment-failed/payment-failed.component";
 
 
 
@@ -27,6 +32,26 @@ const website_routes : Routes = [
       {
         path: "detail-city",
         component: DetailCityComponent
+      },
+      {
+        path: "room-selection",
+        component: RoomSelectionComponent
+      },
+      {
+        path: "payment-reservation",
+        component: PaymentReservationComponent
+      },
+      {
+        path: "payment-verification",
+        component: PaymentVerificationComponent
+      },
+      {
+        path: "payment-success",
+        component: PaymentSuccessComponent
+      },
+      {
+        path: "payment-failed",
+        component: PaymentFailedComponent
       },
       {
         path: "apropos",

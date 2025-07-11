@@ -1,0 +1,139 @@
+<!-- Header Component -->
+<header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a routerLink="/website/find" class="flex items-center">
+          <span class="text-2xl font-bold text-teal-500">Eyangless</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-8">
+        <a 
+          routerLink="/website/find" 
+          routerLinkActive="text-teal-500 border-b-2 border-teal-500"
+          class="text-gray-700 hover:text-teal-500 px-3 py-2 text-sm font-medium transition-colors duration-200"
+        >
+          Accueil
+        </a>
+        <a 
+          routerLink="/website/find" 
+          routerLinkActive="text-teal-500 border-b-2 border-teal-500"
+          class="text-gray-700 hover:text-teal-500 px-3 py-2 text-sm font-medium transition-colors duration-200"
+        >
+          Trouver une chambre
+        </a>
+        <a 
+          href="#" 
+          class="text-gray-700 hover:text-teal-500 px-3 py-2 text-sm font-medium transition-colors duration-200"
+        >
+          Carte
+        </a>
+        <a 
+          routerLink="/website/apropos" 
+          routerLinkActive="text-teal-500 border-b-2 border-teal-500"
+          class="text-gray-700 hover:text-teal-500 px-3 py-2 text-sm font-medium transition-colors duration-200"
+        >
+          Devenir bailleur
+        </a>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="flex items-center space-x-3">
+          <div class="text-right">
+            <div class="text-sm font-medium text-gray-900">Roy Melvin</div>
+            <div class="text-xs text-gray-500">Locataire</div>
+          </div>
+          <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
+            <span class="text-black font-bold text-lg">R</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button 
+          (click)="toggleMenu()"
+          class="text-gray-700 hover:text-teal-500 focus:outline-none focus:text-teal-500 transition-colors duration-200"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path 
+              *ngIf="!isMenuOpen" 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path 
+              *ngIf="isMenuOpen" 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div 
+      class="md:hidden transition-all duration-300 ease-in-out overflow-hidden"
+      [class.max-h-0]="!isMenuOpen"
+      [class.max-h-96]="isMenuOpen"
+      [class.opacity-0]="!isMenuOpen"
+      [class.opacity-100]="isMenuOpen"
+    >
+      <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+        <a 
+          routerLink="/website/find" 
+          routerLinkActive="bg-teal-50 text-teal-500"
+          (click)="closeMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-teal-500 hover:bg-gray-50 rounded-md transition-colors duration-200"
+        >
+          Accueil
+        </a>
+        <a 
+          routerLink="/website/find" 
+          routerLinkActive="bg-teal-50 text-teal-500"
+          (click)="closeMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-teal-500 hover:bg-gray-50 rounded-md transition-colors duration-200"
+        >
+          Trouver une chambre
+        </a>
+        <a 
+          href="#" 
+          (click)="closeMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-teal-500 hover:bg-gray-50 rounded-md transition-colors duration-200"
+        >
+          Carte
+        </a>
+        <a 
+          routerLink="/website/apropos" 
+          routerLinkActive="bg-teal-50 text-teal-500"
+          (click)="closeMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-teal-500 hover:bg-gray-50 rounded-md transition-colors duration-200"
+        >
+          Devenir bailleur
+        </a>
+        
+        <!-- Mobile User Profile -->
+        <div class="border-t border-gray-200 pt-4 mt-4">
+          <div class="flex items-center px-3 py-2">
+            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center mr-3">
+              <span class="text-black font-bold text-lg">R</span>
+            </div>
+            <div>
+              <div class="text-base font-medium text-gray-900">Roy Melvin</div>
+              <div class="text-sm text-gray-500">Locataire</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

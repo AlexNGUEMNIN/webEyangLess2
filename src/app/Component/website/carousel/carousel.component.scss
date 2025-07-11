@@ -1,0 +1,108 @@
+/* Carousel Styles */
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Slide animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+}
+
+/* Navigation buttons */
+.nav-button {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.nav-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dots indicator */
+.dot-indicator {
+  transition: all 0.3s ease;
+}
+
+.dot-indicator.active {
+  transform: scale(1.25);
+  background-color: white;
+}
+
+/* Search bar overlay */
+.search-overlay {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .carousel-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .carousel-description {
+    font-size: 1rem;
+  }
+  
+  .carousel-cta {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .search-overlay {
+    bottom: 1rem;
+    padding: 1rem;
+  }
+  
+  .search-input {
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .carousel-container {
+    height: 400px;
+  }
+  
+  .nav-button {
+    padding: 0.5rem;
+  }
+  
+  .nav-button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .dot-indicator {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}

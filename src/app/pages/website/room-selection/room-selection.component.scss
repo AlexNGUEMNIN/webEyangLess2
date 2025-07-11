@@ -1,0 +1,53 @@
+/* Room Selection Styles */
+
+.room-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.room-card:hover:not(.cursor-not-allowed) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.room-card.selected {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+/* Floor navigation animations */
+.floor-selector button {
+  transition: all 0.2s ease-in-out;
+}
+
+.floor-selector button:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .room-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .room-card {
+    min-height: 100px;
+    padding: 1rem;
+  }
+  
+  .room-card svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .floor-selector {
+    margin-bottom: 1.5rem;
+  }
+  
+  .floor-selector .mx-8 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}

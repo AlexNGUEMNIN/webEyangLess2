@@ -1,0 +1,66 @@
+/* Card Cite Styles */
+
+.city-card {
+  transition: all 0.3s ease-in-out;
+}
+
+.city-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.city-image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.city-card:hover .city-image {
+  transform: scale(1.05);
+}
+
+.favorite-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.favorite-button:hover {
+  transform: scale(1.1);
+}
+
+.favorite-button.active {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.favorite-button.active svg {
+  color: #ef4444;
+  fill: #ef4444;
+}
+
+/* Line clamp utility */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .city-card {
+    margin-bottom: 1rem;
+  }
+  
+  .city-image-container {
+    height: 12rem;
+  }
+  
+  .city-content {
+    padding: 1rem;
+  }
+  
+  .city-title {
+    font-size: 1rem;
+  }
+  
+  .city-price {
+    font-size: 1.25rem;
+  }
+}

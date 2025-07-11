@@ -1,0 +1,69 @@
+<!-- Payment Failed Page -->
+<div class="fixed inset-0 bg-white flex items-center justify-center">
+  <div class="text-center max-w-md mx-auto px-6">
+    
+    <!-- Error Icon -->
+    <div class="mb-8">
+      <div class="w-20 h-20 bg-red-500 rounded-lg flex items-center justify-center mx-auto mb-4 transform rotate-12 animate-shake">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="space-y-4 mb-8">
+      <h1 class="text-2xl font-bold text-gray-900">Paiement échoué</h1>
+      <div class="space-y-2">
+        <p class="text-gray-600 leading-relaxed">
+          Veuillez vérifier si le paiement a bel et bien été effectué de votre côté et que les informations sont correctes.
+        </p>
+        <p class="text-gray-500 text-sm">
+          En cas de problème, contactez le service client
+        </p>
+      </div>
+    </div>
+
+    <!-- Error Details -->
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+      <div class="flex items-start space-x-3">
+        <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+        </svg>
+        <div class="text-left">
+          <p class="text-red-800 text-sm font-medium">Transaction non aboutie</p>
+          <p class="text-red-700 text-sm">Vérifiez votre solde et réessayez</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="space-y-3">
+      <!-- Primary Button - Contact Support -->
+      <button 
+        (click)="onContactSupport()"
+        class="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+      >
+        Service client
+      </button>
+
+      <!-- Secondary Button - Retry -->
+      <button 
+        (click)="onRetry()"
+        class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-all duration-200 border border-gray-300"
+      >
+        Réessayer
+      </button>
+    </div>
+
+    <!-- Help Text -->
+    <div class="mt-6 text-xs text-gray-500 space-y-1">
+      <p>Problèmes fréquents :</p>
+      <ul class="text-left space-y-1">
+        <li>• Solde insuffisant</li>
+        <li>• Numéro de téléphone incorrect</li>
+        <li>• Problème de réseau</li>
+      </ul>
+    </div>
+  </div>
+</div>

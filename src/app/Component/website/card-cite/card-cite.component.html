@@ -1,0 +1,50 @@
+<!-- City Card Component -->
+<div 
+  class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+  (click)="onCardClick()"
+>
+  <!-- Image -->
+  <div class="relative h-48 overflow-hidden">
+    <img 
+      [src]="city.image" 
+      [alt]="city.name"
+      class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+    >
+    <div class="absolute top-3 right-3">
+      <button class="p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors duration-200">
+        <svg class="w-5 h-5 text-gray-600 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="p-6">
+    <!-- Title and Price -->
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-lg font-bold text-gray-900 line-clamp-1">{{ city.name }}</h3>
+      <div class="text-right">
+        <div class="text-xl font-bold text-teal-600">{{ city.price | number:'1.0-0' }}</div>
+        <div class="text-sm text-gray-500">{{ city.currency }}/{{ city.period }}</div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="flex items-center text-gray-600 mb-4">
+      <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
+      <div>
+        <div class="text-sm font-medium">{{ city.location }}</div>
+        <div class="text-xs text-gray-500">{{ city.distance }}</div>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <button class="w-full bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-200">
+      Voir les détails
+    </button>
+  </div>
+</div>

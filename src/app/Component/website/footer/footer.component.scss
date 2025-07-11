@@ -1,0 +1,88 @@
+/* Footer Styles */
+
+.footer {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+.footer-link {
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #14b8a6;
+  transition: width 0.2s ease-in-out;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+.social-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+.social-icon:hover {
+  transform: translateY(-2px);
+  color: #14b8a6;
+}
+
+.footer-logo {
+  transition: transform 0.2s ease-in-out;
+}
+
+.footer-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-company {
+    text-align: center;
+  }
+  
+  .footer-links {
+    text-align: center;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+  }
+  
+  .footer-bottom-links {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
+/* Animation for footer sections */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.footer-section:nth-child(1) { animation-delay: 0.1s; }
+.footer-section:nth-child(2) { animation-delay: 0.2s; }
+.footer-section:nth-child(3) { animation-delay: 0.3s; }
+.footer-section:nth-child(4) { animation-delay: 0.4s; }

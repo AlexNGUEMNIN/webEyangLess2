@@ -1,0 +1,28 @@
+<!-- Payment Verification Page -->
+<div class="fixed inset-0 bg-white flex items-center justify-center">
+  <div class="text-center">
+    
+    <!-- Loading Spinner -->
+    <div class="mb-8">
+      <div class="relative">
+        <div class="w-16 h-16 border-4 border-gray-200 border-t-teal-500 rounded-full animate-spin mx-auto"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-8 h-8 bg-teal-500 rounded-full opacity-20 animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Text -->
+    <div class="space-y-4">
+      <h1 class="text-2xl font-bold text-gray-900">En attente du paiement</h1>
+      <p class="text-gray-600">cela peut prendre quelques minutes</p>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="flex justify-center space-x-2 mt-8">
+      <div class="w-2 h-2 bg-teal-500 rounded-full animate-bounce"></div>
+      <div class="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+      <div class="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+    </div>
+  </div>
+</div>
