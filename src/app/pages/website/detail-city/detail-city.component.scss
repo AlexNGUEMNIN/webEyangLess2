@@ -1,0 +1,90 @@
+/* photo-grid.component.css */
+
+/* Animations personnalisées */
+.photo-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-container img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.photo-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Effet de chargement */
+.photo-container img:not(.loaded) {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-container img.loaded {
+  opacity: 1;
+}
+
+/* Styles pour l'overlay des photos supplémentaires */
+.additional-photos-overlay {
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+  backdrop-filter: blur(1px);
+  transition: all 0.3s ease;
+}
+
+.additional-photos-overlay:hover {
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+  backdrop-filter: blur(2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .photo-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  
+  .photo-grid > div:first-child {
+    height: 250px;
+  }
+  
+  .small-photos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .small-photos-grid > div {
+    height: 120px;
+  }
+}
+
+/* Animation de fade-in pour les images */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.photo-container {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Styles pour le skeleton loader (optionnel) */
+.photo-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

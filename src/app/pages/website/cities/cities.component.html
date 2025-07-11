@@ -1,0 +1,212 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <!-- Header sticky avec recherche et filtres -->
+  <div class="mt-20 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <!-- Barre de recherche -->
+      <div class="relative mb-4">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-search text-gray-400"></i>
+        </div>
+        <input
+          type="text"
+          class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 placeholder-gray-500 text-gray-900"
+          placeholder="Rechercher une cité universitaire..."
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+        >
+      </div>
+
+      <!-- Bouton toggle filtres mobile -->
+      <div class="flex justify-between items-center mb-4 lg:hidden">
+        <h2 class="text-lg font-semibold text-gray-800">Filtres</h2>
+        <button
+          (click)="toggleFilters()"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filtres -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4" [class.hidden]="!showFilters" [class.lg:grid]="true">
+        <!-- Filtre Prix -->
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <label class="block text-sm font-medium text-gray-700 mb-3">Prix (FCFA/mois)</label>
+          <select
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            [(ngModel)]="selectedPriceRange"
+            (change)="onFilterChange()"
+          >
+            <option value="">Tous les prix</option>
+            <option value="0-50000">Moins de 50 000</option>
+            <option value="50000-75000">50 000 - 75 000</option>
+            <option value="75000-100000">75 000 - 100 000</option>
+            <option value="100000-150000">100 000 - 150 000</option>
+            <option value="150000+">Plus de 150 000</option>
+          </select>
+        </div>
+
+        <!-- Filtre Superficie -->
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <label class="block text-sm font-medium text-gray-700 mb-3">Superficie (m²)</label>
+          <select
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            [(ngModel)]="selectedSurfaceRange"
+            (change)="onFilterChange()"
+          >
+            <option value="">Toutes tailles</option>
+            <option value="0-15">Moins de 15 m²</option>
+            <option value="15-25">15 - 25 m²</option>
+            <option value="25-35">25 - 35 m²</option>
+            <option value="35+">Plus de 35 m²</option>
+          </select>
+        </div>
+
+        <!-- Filtre Type de chambre -->
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <label class="block text-sm font-medium text-gray-700 mb-3">Type de logement</label>
+          <select
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            [(ngModel)]="selectedRoomType"
+            (change)="onFilterChange()"
+          >
+            <option value="">Tous types</option>
+            <option value="simple">Chambre simple</option>
+            <option value="double">Chambre double</option>
+            <option value="studio">Studio</option>
+          </select>
+        </div>
+
+        <!-- Filtre Commodités -->
+        <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+          <label class="block text-sm font-medium text-gray-700 mb-3">Commodités</label>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors duration-200"
+                [(ngModel)]="filters.wifi"
+                (change)="onFilterChange()"
+              >
+              <span class="ml-2 text-sm text-gray-600">WiFi</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors duration-200"
+                [(ngModel)]="filters.parking"
+                (change)="onFilterChange()"
+              >
+              <span class="ml-2 text-sm text-gray-600">Parking</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors duration-200"
+                [(ngModel)]="filters.security"
+                (change)="onFilterChange()"
+              >
+              <span class="ml-2 text-sm text-gray-600">Sécurité 24h</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Résumé des filtres actifs -->
+      @if (hasActiveFilters()) {
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="text-sm text-gray-600">Filtres actifs:</span>
+          @if (selectedPriceRange) {
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 animate-fadeIn">
+              Prix: {{getPriceRangeLabel(selectedPriceRange)}}
+              <button (click)="clearPriceFilter()" class="ml-2 hover:text-blue-600">×</button>
+            </span>
+          }
+          @if (selectedSurfaceRange) {
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 animate-fadeIn">
+              Surface: {{getSurfaceRangeLabel(selectedSurfaceRange)}}
+              <button (click)="clearSurfaceFilter()" class="ml-2 hover:text-green-600">×</button>
+            </span>
+          }
+          @if (selectedRoomType) {
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 animate-fadeIn">
+              Type: {{getRoomTypeLabel(selectedRoomType)}}
+              <button (click)="clearRoomTypeFilter()" class="ml-2 hover:text-purple-600">×</button>
+            </span>
+          }
+          <button
+            (click)="clearAllFilters()"
+            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 hover:bg-red-200 transition-colors duration-200"
+          >
+            Effacer tous
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- En-tête des résultats -->
+    <div class="flex md:flex-row flex-col justify-between md:items-center mb-6">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Liste des cités universitaires</h1>
+        <p class="text-gray-600 mt-1">{{filteredCities.length}} résultat(s) trouvé(s)</p>
+      </div>
+
+      <!-- Tri -->
+      <div class="flex mt-3 md:mt-0 md:items-center space-x-4">
+        <label class="text-sm text-gray-600">Trier par:</label>
+        <select
+          class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          [(ngModel)]="sortBy"
+          (change)="onSortChange()"
+        >
+          <option value="name">Nom</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="surface-asc">Surface croissante</option>
+          <option value="surface-desc">Surface décroissante</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading state -->
+    @if (loading) {
+      <div class="flex justify-center items-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    }
+
+    <!-- Grid des cités -->
+    @if (!loading) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 opacity-100 z-50">
+        @for (city of filteredCities; track city.id; let i = $index) {
+          <app-card-cite [city]="city"
+          (click)="viewDetails(city)"></app-card-cite>
+        }
+      </div>
+    }
+
+    <!-- Message si aucun résultat -->
+    @if (!loading && filteredCities.length === 0) {
+      <div class="text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Aucune cité trouvée</h3>
+        <p class="text-gray-500 mb-4">Essayez de modifier vos critères de recherche</p>
+        <button
+          (click)="clearAllFilters()"
+          class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+        >
+          Réinitialiser les filtres
+        </button>
+      </div>
+    }
+  </div>
+</div>
+
+

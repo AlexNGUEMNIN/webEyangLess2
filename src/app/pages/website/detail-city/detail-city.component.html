@@ -1,0 +1,203 @@
+<div class="mt-20 flex flex-row justify-between mx-4 gap-4 py-3">
+  <div class="w-2/3">
+    <a class="text-darkgreen mb-2 block w-fit" [routerLink]="['/website/find']">
+      <i class="fas fa-arrow-left ml-4 mr-2 text-xl"></i>
+      Revenir à la liste des cités
+    </a>
+    
+    <div class="bg-gray-100 p-3 rounded-lg">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 h-96">
+        <!-- Large photo on the left -->
+        <div class="relative overflow-hidden rounded-lg bg-gray-200">
+          <img 
+            [src]="photos[0].src" 
+            [alt]="photos[0].alt"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+            (click)="onPhotoClick(photos[0])"
+          />
+        </div>
+
+        <!-- Grid of smaller photos on the right -->
+        <div class="grid grid-cols-2 gap-2">
+          @for (photo of photos.slice(1); track $index) {
+            <div 
+              class="relative overflow-hidden rounded-lg bg-gray-200"
+            >
+              <img 
+                [src]="photo.src" 
+                [alt]="photo.alt"
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+                (click)="onPhotoClick(photo)"
+              />
+              
+              <!-- Additional photos overlay for the last image -->
+              @if($index === photos.slice(1).length -1 && photo.additionalPhotos){
+                <div 
+                  class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer hover:bg-opacity-60 transition-all duration-300"
+                  (click)="onShowAllPhotos()"
+                >
+                  <span class="text-white text-lg font-semibold">
+                    +{{ photo.additionalPhotos }} photos
+                  </span>
+                </div>
+               }
+              
+            </div>
+          }
+          
+        </div>
+      </div>      
+    </div>
+    <div class="flex flex-row justify-between p-4">
+      <div class="">
+        <h1 class="text-3xl font-bold mb-2">Cité Bevina
+          <span class="text-blue-700 font-medium text-base ml-5"> <i class="fas fa-award"></i> Vérifiée</span>
+        </h1>
+        <span>
+          <i class="fas fa-map-marker-alt text-darkgreen mr-2"></i>
+          Cameroun, Eyang <button class="border border-appgreen py-1 px-2 bg-white text-appgreen ml-4 rounded-full hover:text-orange-600 duration-150">Voir sur la carte</button>
+        </span>
+
+      </div>
+      <div class="rounded-2xl p-3 flex flex-row justify-between gap-2 bg-gradient-to-r from-[#FBC000] to-[#FBA300]">
+        <div class="flex items-center">
+          <i class="fas fa-exclamation-circle text-3xl"></i>
+        </div>
+        <div>
+          <h2 class="font-semibold text-2xl">4 chambres disponibles</h2>
+          <p class="text-xs">Profitez-en pour réserver votre chambre dès maintenant !</p>
+        </div>
+        <div>
+          <button class="bg-white hover:bg-transparent rounded-full px-3 py-2 duration-200 text-black">Réserver</button>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="px-4">
+      <div class="border border-gray-100 rounded-2xl overflow-hidden flex flex-row justify-between">
+        <div class="p-3 flex flex-row space-x-4 border-r border-gray-300 w-[25%]">
+          <div class="flex items-center">
+            <i class="fas fa-bed text-gray-400 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-sm">Prix de la chambre</h3>
+            <span class="text-xl font-semibold">50.000 FCFA</span>
+          </div>
+        </div>
+
+        <div class="p-3 flex flex-row space-x-4 border-r border-gray-300 w-[25%]">
+          <div class="flex items-center">
+            <i class="fas fa-bed text-gray-400 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-sm">Taille par chambre</h3>
+            <span class="text-xl font-semibold">14 m²</span>
+          </div>
+        </div>
+
+        <div class="p-3 flex flex-row space-x-4 border-r border-gray-300 w-[25%]">
+          <div class="flex items-center">
+            <i class="fas fa-bed text-gray-400 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-sm">Caution</h3>
+            <span class="text-xl font-semibold">100.000 FCFA</span>
+          </div>
+        </div>
+
+        <div class="p-3 flex flex-row space-x-4 w-[25%]">
+          <div class="flex items-center">
+            <i class="fas fa-bed text-gray-400 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-sm">Chambres</h3>
+            <span class="text-xl font-semibold">28</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="mt-5">
+          <h1 class="text-appgreen text-2xl font-semibold mb-2">Description</h1>
+          <p>Un lieu dynamique et convivial où les étudiants vivent, échangent et grandissent ensemble. Avec des logements pratiques, des espaces communs pour étudier et se détendre, et une ambiance internationale, la cité universitaire est bien plus qu'un simple hébergement : c'est un véritable tremplin pour la vie étudiante !</p>
+        </div>
+        
+        <div class="mt-5">
+          <h1 class="text-appgreen text-2xl font-semibold mb-2">Commentaires</h1>
+          <p></p>
+
+          <button class="bg-appgreen hover:bg-darkgreen duration-200 text-white rounded-xl py-3 px-3 font-semibold my-2">
+            Laisser un commentaire
+          </button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="bg-gray-100 w-1/3 rounded-lg p-3">
+    <span class="bg-white rounded-xl font-semibold text-2xl flex items-center justify-center w-fit px-3 py-1 text-orange-900">
+      4,2 <i class="fas fa-star text-xl text-yellow-400 ml-3"></i>
+    </span>
+
+    <h2 class="text-2xl font-semibold my-2"> Caractéristiques</h2>
+    <div class="rounded-xl border border-gray-500 p-4">
+      <span class="border-b border-b-gray-300 py-2 flex flex-row justify-between text-sm">
+        <span>Niveaux</span>
+        <span class="font-semibold w-5/12">02</span>
+      </span>
+      <span class="border-b border-b-gray-300 py-3 flex flex-row justify-between text-sm">
+        <span>Eau</span>
+        <span class="font-semibold w-5/12">Gratuite</span>
+      </span>
+      <span class="border-b border-b-gray-300 py-3 flex flex-row justify-between text-sm">
+        <span>Electricité</span>
+        <span class="font-semibold w-5/12">Compteur pré-payé</span>
+      </span>
+      <span class="border-b border-b-gray-300 py-3 flex flex-row justify-between text-sm">
+        <span>Groupe électrogène</span>
+        <span class="font-semibold w-5/12">Oui</span>
+      </span>
+      <span class="border-b border-b-gray-300 py-3 flex flex-row justify-between text-sm">
+        <span>Forage</span>
+        <span class="font-semibold w-5/12">Oui</span>
+      </span>
+      <span class="border-b border-b-gray-300 py-3 flex flex-row justify-between text-sm">
+        <span>Barrière</span>
+        <span class="font-semibold w-5/12">Oui</span>
+      </span>
+      
+    </div>
+
+    <h2 class="text-2xl font-semibold my-2"> Suppléments</h2>
+    <div class="rounded-xl border border-gray-500 p-4">
+      <span class="bg-yellow-100 p-2 px-4 rounded-full text-sm text-orange-900 mr-1 mb-1 inline-block">
+        Restaurant
+      </span>
+      <span class="bg-yellow-100 p-2 px-4 rounded-full text-sm text-orange-900 mr-1 mb-1 inline-block">
+        Restaurant
+      </span>
+      <span class="bg-yellow-100 p-2 px-4 rounded-full text-sm text-orange-900 mr-1 mb-1 inline-block">
+        Restaurant
+      </span>
+      <span class="bg-yellow-100 p-2 px-4 rounded-full text-sm text-orange-900 mr-1 mb-1 inline-block">
+        Restaurant
+      </span>
+      
+    </div>
+
+    <button class="bg-appgreen hover:bg-darkgreen duration-200 text-white rounded-xl w-full py-3 font-semibold my-2">
+      Réserver
+    </button>
+
+    <div class="bg-gray-900 rounded-xl p-3 text-white flex flex-row gap-4 mt-3">
+      <div class="items-center flex justify-center">
+        <i class="fas fa-exclamation-circle text-2xl"></i>
+      </div>
+      <div>
+        <h2 class="font-semibold text-xl mb-1">Delai de 7 jours</h2>
+        <p class="text-sm">En procédant à la réservation de votre chambre vous aurez un delai de 7 jours pour valider votre réservation en paiement la totalité desdu bail de la chambre.</p>
+      </div>
+    </div>
+  </div>
+</div>
