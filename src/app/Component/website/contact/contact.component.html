@@ -1,0 +1,13 @@
+<div class="bg-gray-50 w-full rounded-xl p-3 flex flex-row justify-between">
+  <div>
+    <h2 class="font-medium"> {{ data.name }} </h2>
+    <span class="text-sm"><i class="fas fa-envelope mr-2 text-gray-800 my-2"></i> {{ data.email }} </span> <br>
+    <span class="text-sm"><i class="fas fa-phone mr-2 text-gray-800 my-2"></i> {{ data.phone }} </span>
+  </div>
+  <div class="flex items-center justify-center">
+    <span class="bg-red-600 text-white flex items-center justify-center rounded-full w-8 h-8 cursor-pointer hover:bg-red-900"
+      (click)="removeContact(data.email)">
+      <i class="fas fa-x"></i>
+    </span>
+  </div>
+</div>

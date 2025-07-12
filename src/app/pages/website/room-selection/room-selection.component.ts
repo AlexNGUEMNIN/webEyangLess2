@@ -106,7 +106,7 @@ export class RoomSelectionComponent implements OnInit {
       case 'libre':
         return 'bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer';
       case 'prise':
-        return 'bg-pink-500 text-white cursor-not-allowed';
+        return 'bg-darkred text-white cursor-not-allowed';
       case 'reservee':
         return 'bg-yellow-400 text-black cursor-not-allowed';
       case 'selected':

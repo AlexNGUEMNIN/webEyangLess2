@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { DetailCityComponent } from "./pages/website/detail-city/detail-city.component";
+import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DetailCityComponent],
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterLinkActive ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'eyangless';
+ title = 'EyangLess';
+  constructor(){
+
+  }
+
 }

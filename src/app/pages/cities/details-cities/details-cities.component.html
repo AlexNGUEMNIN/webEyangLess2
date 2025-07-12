@@ -1,0 +1,448 @@
+<app-layout></app-layout>
+<main class="pl-0 lg:pl-64 transition-all duration-300">
+  <div class="p-4">
+    <!-- Retour -->
+    <div class="flex items-center gap-2 mb-4">
+      <button class="text-gray-600 hover:text-black">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h1 class="text-2xl font-bold">Détails de la cité</h1>
+
+
+    </div>
+
+    <!-- Haut de page -->
+    <div class="grid lg:grid-cols-3 gap-6 mb-6">
+      <img src="assets/images/bg cité shekina.jpg" alt="Image cité"
+        class="rounded-xl w-full h-72 object-cover col-span-1 lg:col-span-1">
+
+      <div class="flex flex-col justify-between col-span-1 lg:col-span-2">
+        <div>
+          <div class="flex justify-between">
+
+            <div>
+              <h2 class="text-2xl font-semibold mb-2">Cité Shekina</h2>
+              <p class="text-sm text-teal-600 mb-2">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <a href="#" class="underline">Voir la localisation sur la carte</a>
+              </p>
+
+            </div>
+            <div class="mt-4 mr-10">
+              <span class="text-green-600 font-bold text-3xl">4,5</span> &nbsp;
+              <i class="fas fa-star text-yellow-400 text-3xl"></i>
+            </div>
+          </div>
+
+
+
+          <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mt-4">
+            <div class="border-t border-gray-400  pt-2">
+              <p class="text-sm text-gray-500">Nombre de chambres</p>
+              <p class="font-semibold text-lg">25</p>
+            </div>
+            <div class="border-t border-gray-400  pt-2">
+
+              <p class="text-sm text-gray-500">Prix d'une chambre</p>
+              <p class="font-semibold text-lg">90.000 FCFA</p>
+              <p class="text-xm text-gray-500">~ 1.080.000 FCFA / an</p>
+            </div>
+            <div class="border-t border-gray-400  pt-2">
+
+              <p class="text-sm text-gray-500">Chambre la plus chère</p>
+              <p class="font-semibold">B4</p>
+              <span class="text-sm "> <span class="text-green-800 bg-green-100 px-4 py-2 rounded-full"> <i
+                    class="fas fa-arrow-trend-up"> </i> 100.000 FCFA </span> &nbsp; ~ 1.200.000 / 12
+                mois</span>
+            </div>
+            <div class="border-t border-gray-400  pt-2">
+
+
+              <p class="text-sm text-gray-500">Chambre la moins chère</p>
+              <p class="font-semibold">A8</p>
+              <span class="text-sm "> <span class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full"> <i
+                    class="fas fa-arrow-trend-down"> </i> 100.000 FCFA </span> &nbsp; ~ 840.000 / 12
+                mois</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Note -->
+
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex justify-evenly bggray mb-4 overflow-x-auto p-3 rounded-xl shadow">
+      <button class="section" (click)="option = 'caracteristique'"
+        [ngClass]="{ 'section_active': option === 'caracteristique' }">Caractéristiques</button>
+      <button class="section" (click)="option = 'contact'"
+        [ngClass]="{ 'section_active': option === 'contact' }">Contacts</button>
+      <button class="section" (click)="option = 'galerie'"
+        [ngClass]="{ 'section_active': option === 'galerie' }">Galerie</button>
+      <button class="section" (click)="option = 'chambre'"
+        [ngClass]="{ 'section_active': option === 'chambre' }">Chambres</button>
+      <button class="section" (click)="option = 'suplement'"
+        [ngClass]="{ 'section_active': option === 'suplement' }">Suppléments</button>
+      <button class="section" (click)="option = 'commentaire'"
+        [ngClass]="{ 'section_active': option === 'commentaire' }">Commentaire</button>
+    </div>
+
+
+    <!-- Contenu Caractéristiques -->
+    @if (option === 'caracteristique') {
+    <div class="bg-white rounded-xl p-6 shadow">
+      <h3 class="font-bold text-xl mb-4">Caractéristiques</h3>
+
+      <div class="mb-4">
+        <h4 class="text-teal-600 font-semibold">Description</h4>
+        <p class="text-sm text-gray-700">Juste une courte et brève description de tout ce qui se trouve dans cette zone
+          de merde, et je ne devrais pas dire de gros mots sur cette maquette.</p>
+      </div>
+
+      <div class="mb-4">
+        <h4 class="text-teal-600 font-semibold mb-2">Paiement</h4>
+        <table class="w-full text-sm text-left table-fixed ">
+          <thead class="text-gray-500 border-b border-gray-400">
+            <tr>
+              <th>Prix de la chambre</th>
+              <th>Sur 10 mois</th>
+              <th>Caution</th>
+              <th>Numéro de compte</th>
+              <th>Banque</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-gray-50 border-t border-gray-400">
+              <td class="pt-2">55.000 FCFA</td>
+              <td>550.000 FCFA</td>
+              <td>2 mois</td>
+              <td>00 6 82 26 72 98 0 000</td>
+              <td>UBA</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <h4 class="text-teal-600 font-semibold mb-2">Autres caractéristiques</h4>
+        <table class="w-full text-sm text-left table-fixed ">
+          <thead class="text-gray-500 border-b border-gray-400">
+            <tr>
+              <th>Nombre de chambres</th>
+              <th>Taille par chambre</th>
+              <th>Meublée</th>
+              <th>Eau</th>
+              <th>Électricité</th>
+              <th>Forage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-gray-50">
+              <td class="pt-2">28</td>
+              <td>7 m²</td>
+              <td>Oui</td>
+              <td>Gratuit</td>
+              <td>Gratuit</td>
+              <td>Oui</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="w-full text-sm text-left table-fixed mt-3">
+          <thead class="text-gray-500 border-b border-gray-400">
+            <tr>
+
+              <th>Groupe électrogène</th>
+              <th>Sécurité</th>
+              <th>Niveaux (étages)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-gray-50">
+              <td class="pt-2">Oui</td>
+              <td>Non</td>
+              <td>02</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    }
+
+
+    <!-- Contenu Galerie -->
+    @if (option === 'galerie') {
+    <div class="bg-white rounded-xl p-6 shadow">
+      <div class="flex items-center gap-3 mb-4">
+        <h2 class="text-xl font-bold">Galerie</h2>
+        <span class="bg-gray-200 text-sm px-3 py-1 rounded-full font-semibold">
+          {{ medias.length }} médias
+        </span>
+      </div>
+
+      <!-- Grille des médias -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        @for (media of medias; track $index) {
+        <div
+          class="aspect-square rounded-xl overflow-hidden bg-gray-100 border relative cursor-pointer hover:scale-105 transition-transform"
+          (click)="media.type === 'image' ? openImage(media.url) : openVideo(media.url)">
+
+          <!-- ✅ Afficher l’image si elle existe -->
+          <ng-container *ngIf="media.url; else defaultVideoThumbnail">
+            <img [src]="media.url" alt="media" class="w-full h-full object-cover" />
+          </ng-container>
+
+          <!-- 🆘 Fallback si pas d’image -->
+          <ng-template #defaultVideoThumbnail>
+            <div class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
+              <i class="fas fa-video text-3xl"></i>
+            </div>
+          </ng-template>
+
+          <!-- ▶️ Icône "Play" si c’est une vidéo -->
+          @if (media.type === 'video') {
+          <div class="absolute top-2 left-2 z-10">
+            <i class="fas fa-play-circle text-white text-2xl drop-shadow-md"></i>
+          </div>}
+        </div>}
+      </div>
+
+      <!-- 🖼️ Modal image -->
+      @if (selectedImage) {
+      <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative max-w-3xl w-full">
+          <button (click)="closeModals()"
+            class="absolute top-0 right-0 text-white text-3xl font-bold p-2 hover:text-red-400">
+            &times;
+          </button>
+          <img [src]="selectedImage" class="rounded-lg w-full max-h-[90vh] object-contain" />
+        </div>
+      </div>}
+
+      <!-- 🎬 Modal vidéo -->
+      @if (selectedVideoUrl) {
+      <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative max-w-3xl w-full">
+          <button (click)="closeModals()"
+            class="absolute top-0 right-0 text-white text-3xl font-bold p-2 hover:text-red-400">
+            &times;
+          </button>
+          <video controls autoplay class="w-full max-h-[90vh] rounded-xl">
+            <source [src]="selectedVideoUrl" type="video/mp4" />
+            Votre navigateur ne prend pas en charge la vidéo.
+          </video>
+        </div>
+      </div>}
+    </div>
+
+    <!-- modal photo avec fleche -->
+    @if (selectedImageIndex !== null) {
+    <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <!-- BACKDROP cliquable -->
+      <div class="absolute inset-0 z-40" (click)="closeModals()"></div>
+
+      <!-- CONTENU modal cliquable (ne ferme pas) -->
+      <div class="relative max-w-3xl w-full flex items-center gap-4 z-50">
+        <button (click)="prevImage()" [disabled]="selectedImageIndex === 0"
+          class="text-white text-3xl font-bold p-2 disabled:opacity-30 z-50">
+          &#8592;
+        </button>
+
+        <div class="relative w-full">
+          <button (click)="closeModals()"
+            class="absolute top-0 right-0 text-white text-3xl font-bold p-2 hover:text-red-400 z-50">
+            &times;
+          </button>
+          <img [src]="imageMedias[selectedImageIndex].url" class="rounded-lg w-full max-h-[90vh] object-contain" />
+        </div>
+
+        <button (click)="nextImage()" [disabled]="selectedImageIndex === imageMedias.length - 1"
+          class="text-white text-3xl font-bold p-2 disabled:opacity-30 z-50">
+          &#8594;
+        </button>
+      </div>
+    </div>
+
+    }
+
+
+    <!-- modal video avec fleche -->
+    @if (selectedVideoIndex !== null) {
+    <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+
+      <!-- BACKDROP cliquable -->
+      <div class="absolute inset-0 z-40" (click)="closeModals()"></div>
+
+
+      <div class="relative max-w-3xl w-full flex items-center gap-4 z-50">
+        <!-- ← -->
+        <button (click)="prevVideo()" [disabled]="selectedVideoIndex === 0"
+          class="text-white text-3xl font-bold p-2 disabled:opacity-30">
+          &#8592;
+        </button>
+
+        <div class="relative w-full">
+          <button (click)="closeModals()"
+            class="absolute top-0 right-0 text-white text-3xl font-bold p-2 hover:text-red-400 z-10">
+            &times;
+          </button>
+          <video controls autoplay class="w-full max-h-[90vh] rounded-xl">
+            <source [src]="videoMedias[selectedVideoIndex].url" type="video/mp4" />
+            Votre navigateur ne prend pas en charge la vidéo.
+          </video>
+        </div>
+
+        <!-- → -->
+        <button (click)="nextVideo()" [disabled]="selectedVideoIndex === videoMedias.length - 1"
+          class="text-white text-3xl font-bold p-2 disabled:opacity-30">
+          &#8594;
+        </button>
+      </div>
+    </div>
+    }
+
+
+    }
+
+    <!-- Contenu suplement -->
+    @if (option === 'suplement') {
+    <div class="bg-white rounded-xl p-6 shadow">
+      <h2 class="text-xl font-bold mb-4">Suppléments</h2>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        @for (supplement of supplements; track $index) {
+        <div class="bg-gray-50 rounded-lg p-4 flex flex-col gap-2 shadow">
+          <div class="flex items-center gap-3 text-lg font-semibold">
+            <i [class]="supplement.icon" class="text-xl"></i>
+            <span>{{ supplement.nom }}</span>
+          </div>
+
+          <span [ngClass]="{
+          'bg-green-400 text-white': supplement.statut === 'Opérationnel',
+          'bg-yellow-200 text-yellow-800': supplement.statut === 'En cours'
+        }" class="text-xs font-semibold px-3 py-1 rounded-full w-fit">
+            {{ supplement.statut }}
+          </span>
+        </div>}
+      </div>
+    </div>
+    }
+
+
+    <!-- 
+        @if (option === 'galerie') {
+    <div class="bg-white rounded-xl p-6 shadow">
+
+    </div>
+    } -->
+
+
+    <!-- Contenu Chambres -->
+    @if ( option === 'chambre') {
+    <div class="bg-white rounded-xl p-6 shadow">
+      <h3 class="font-bold text-xl mb-4">Chambres</h3>
+
+      <div class="flex flex-wrap gap-4 items-center text-sm">
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded bg-gray-200 border"></div>
+          <span>Chambre libre</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded bg-yellow-300"></div>
+          <span>Chambre réservée</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded bg-green-400"></div>
+          <span>Chambre prise</span>
+        </div>
+        <div class="flex items-center gap-2 text-red-600 font-medium">
+          <span class="text-lg">!</span>
+          <span>En attente de validation</span>
+        </div>
+
+        <!-- Résumé à droite -->
+        <div class="ml-auto flex gap-2">
+          <span class="border rounded-full px-3 py-1">3 niveaux</span>
+          <span class="border rounded-full px-3 py-1">25 chambres</span>
+        </div>
+      </div>
+
+      <!-- Liste par niveau -->
+      @for (niveau of niveaux; track $index) {
+      <div>
+        <h3 class="text-lg font-semibold mb-2">Niveau {{ niveau.numero }}</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          @for (chambre of niveau.chambres; track $index) {
+          <div [ngClass]="{
+          'bggray text-gray-700': chambre.status === 'libre',
+          'bg-yellow-200 text-yellow-900': chambre.status === 'reservee',
+          'bg-green-400 text-white': chambre.status === 'prise'
+        }" class="relative p-4 rounded shadow text-sm">
+
+            <!-- Alerte si en attente -->
+            @if (chambre.status === 'reservee' && chambre.attenteValidation) {
+            <div
+              class="absolute top-1 right-1 w-5 h-5 text-xs bg-red-600 text-white rounded-full flex items-center justify-center font-bold">
+              !</div>
+            }
+            <!-- Icone + nom -->
+            <div class="flex items-center gap-2 font-bold mb-1">
+              <i class="fas fa-bed"></i> {{ chambre.nom }}
+            </div>
+
+            <!-- Prix -->
+            <p class="text-sm font-semibold">{{ chambre.prix | number }} FCFA</p>
+            <p class="text-xs mt-1">Voir les caractéristiques</p>
+          </div>
+          }
+        </div>
+        <hr class="mt-4 mb-1">
+      </div>
+      }
+    </div>
+    }
+
+    <!-- Contenu comentaire -->
+
+    @if (option === 'commentaire') {
+    <div class="bg-white rounded-xl p-6 shadow">
+
+      <div class="flex items-center gap-3">
+        <h2 class="text-xl font-bold">Commentaires</h2>
+        <span class="bg-gray-200 text-sm px-3 py-1 rounded-full font-semibold">03</span>
+      </div>
+
+      <!-- Grille responsive des commentaires -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-3">
+        @for (commentaire of commentaires; track $index) {
+        <div class="border rounded-xl p-4 bg-white shadow-sm space-y-2">
+
+          <!-- Auteur + note -->
+          <div class="flex items-center gap-3">
+            <img [src]="commentaire.photo" alt="photo" class="w-10 h-10 rounded-full object-cover" />
+            <div>
+              <h4 class="font-bold text-sm">{{ commentaire.nom }}</h4>
+              <!-- Étoiles -->
+              <div class="flex text-yellow-400 text-xs">
+                @for (star of [1,2,3,4,5]; track $index) {
+                <ng-container>
+                  <i class="fas fa-star" [class.text-gray-300]="$index >= commentaire.note"></i>
+                </ng-container>}
+              </div>
+            </div>
+          </div>
+
+          <!-- Contenu -->
+          <p class="text-sm text-gray-700">{{ commentaire.texte }}</p>
+
+          <!-- Date -->
+          <p class="text-xs text-right text-gray-400">Publié le {{ commentaire.date | date:'dd/MM/yyyy' }}</p>
+        </div>
+        }
+      </div>
+
+    </div>
+    }
+  </div>
+
+</main>

@@ -1,0 +1,98 @@
+<app-layout></app-layout>
+<main class="pl-0 lg:pl-64 transition-all duration-300">
+  <div class="p-4">
+      <h2 class="text-2xl font-bold mb-6">Tableau de bord</h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+     
+        <!-- Graphiques -->
+        <!-- <div class="flex flex-col items-center justify-center text-center rounded-lg  p-6">
+          <img src="./assets/images/logo EyangLess.png " class="mb-4 w-50" alt="Logo de l'application">
+          <h1 class="text-2xl font-bold mb-2 text-gray-800">Quelques graphiques</h1>
+          <p class="text-gray-500">Il vous faut plus de données pour pouvoir avoir des graphiques cohérents.</p>
+        </div> -->
+        <!-- Graphiques ayant les données -->
+
+        <div class="flex flex-col items-center justify-center  rounded-lg  ">
+
+          <!-- SECTION STATISTIQUES -->
+          <section class=" text-white rounded-xl p-6 mb-6 shadow w-100" style="background-color: var(--primary-color);">
+            <h2 class="text-xl font-bold mb-4">Statistiques</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div class="border-r border-white">
+                <p class="text-lg">Cités</p>
+                <p class="text-3xl font-bold">03</p>
+              </div>
+              <div class="lg:border-r border-white">
+                <p class="text-lg">Utilisateurs</p>
+                <p class="text-3xl font-bold">13</p>
+              </div>
+              <div class="border-r border-white">
+                <p class="text-lg">Bailleurs</p>
+                <p class="text-3xl font-bold">03</p>
+              </div>
+              <div>
+                <p class="text-lg">Notes</p>
+                <p class="text-3xl font-bold">122</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- GRAPHIQUE -->
+          <section class="bg-white rounded-xl p-6 shadow border border-gray-200 w-full max-h-[calc(100vh-23rem)]">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-lg font-bold text-gray-800">Les cités les mieux notées</h3>
+                <p class="text-sm text-gray-500">01 Jan – 01 Fev 2025</p>
+              </div>
+              <button class="bg-green-100 text-sm text-black px-3 py-1 rounded-md shadow-sm">Mois <i
+                  class="fas fa-chevron-down ml-1"></i></button>
+            </div>
+
+            <!-- Canvas pour le graphique -->
+            <canvas #chartCanvas class="chart"></canvas>
+
+          </section>
+
+
+        </div>
+
+           <!-- Liste des cités -->
+        <section
+          class="rounded-lg shadow pl-4 pr-4 pb-2 bggray sticky  max-h-[calc(100vh-10.5rem)] overflow-y-auto scrollbar-custom">
+
+          <div class="flex justify-between pt-4 pb-4 items-center  sticky top-0 bggray z-10">
+            <h3 class="text-lg font-semibold">Les cités enregistrées récemment</h3>
+            <button class=" text-white rounded-full p-2 hover:bg-teal-700 principal_button w-10">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+
+
+          <ul class="space-y-3 ">
+            @for (item of recentCities; track $index) {
+
+            <li  [routerLink]="['/details-cites', $index ]"  class="bg-white rounded-lg pr-3 flex items-center justify-between hover:bg-gray-200 cursor-pointer">
+              <div class="flex items-center justify-between">
+                <img src="./assets/images/bg cité shekina.jpg" class="logocite mr-3 ml-2" alt="">
+                <div class="pb-3 pt-3">
+                  <div class="font-semibold">Cité Bevina</div>
+                  <div class="text-sm text-gray-500">28 chambres - 20/01/2025</div>
+                </div>
+              </div>
+
+              <i class="fas fa-chevron-right text-gray-500"></i>
+            </li>
+            }
+          </ul>
+        </section>
+
+
+
+      </div>
+
+  </div>
+
+</main>
+

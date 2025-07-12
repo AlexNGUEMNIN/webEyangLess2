@@ -1,13 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Tailwind CSS */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+// Importations pour tailwind CSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Custom CSS Variables */
 :root {
-  --color-primary: #009688;
+  --primary-color: #029483;
+  --primary-hover: #EBFFFD;
+  --secondary-color: #FFDA83;
+  --chambreprise-color: #8FFFA0;
+  --chambrereserve-color: #8FFFA0;
+  --chambrelibre-color:#F5F5F5;
+  --bg-color:#F5F5F5;
+  --white-color:#ffffff;
   --color-primary-dark: #00695c;
   --color-secondary: #4CAF50;
   --color-accent: #FFC107;
@@ -15,6 +21,143 @@
   --color-success: #4CAF50;
   --color-warning: #FF9800;
   --color-info: #2196F3;
+}
+
+
+// *{
+//     font-family: "Poppins";
+// }
+
+.principal_button{
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+.bggray{
+  background-color: var(--bg-color);
+}
+.logocite{
+  object-fit: contain ;
+  height: 55px;
+  border-radius: 5px;
+}
+
+.scrollbar-custom {
+  scrollbar-width: thin;              /* Firefox */
+  scrollbar-color: var(--primary-color) rgba(17, 24, 39, 0);   /* poignée | fond */
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+
+*{
+  font-family: "Poppins";
+}
+
+
+.person-silhouette {
+  width: 320px;
+  height: 400px;
+  background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+  border-radius: 160px 160px 0 0;
+  margin-bottom: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.person-silhouette::before {
+  content: '';
+  width: 200px;
+  height: 280px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  position: absolute;
+  top: 20px;
+}
+
+.person-silhouette::after {
+  content: '';
+  width: 80px;
+  height: 80px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  position: absolute;
+  top: 60px;
+  z-index: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .min-h-screen {
+    flex-direction: column;
+  }
+
+  .flex-1:first-child {
+    min-height: 40vh;
+  }
+
+  .flex-1:last-child {
+    min-height: 60vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .person-silhouette {
+    display: none;
+  }
+}
+
+/* Animations et transitions */
+input:focus {
+  transform: translateY(-1px);
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Style pour les icônes */
+svg {
+  transition: all 0.2s ease;
+}
+
+/* Focus states améliorés */
+input:focus {
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+}
+
+button:focus {
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3);
+}
+
+/* Hover effects */
+a:hover {
+  text-decoration: underline;
+}
+
+
+/* Animation d'entrée */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 
 /* Custom Utility Classes */

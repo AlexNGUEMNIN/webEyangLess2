@@ -1,0 +1,6 @@
+<app-header (toggleSidebar)="sidebarOpen = !sidebarOpen"></app-header>
+
+<app-sidebar
+  [isOpen]="sidebarOpen"
+  (close)="sidebarOpen = false"
+></app-sidebar>

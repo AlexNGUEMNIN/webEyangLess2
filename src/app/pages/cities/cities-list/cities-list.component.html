@@ -1,0 +1,117 @@
+<app-layout></app-layout>
+<main class="pl-0 lg:pl-64 transition-all duration-300">
+  <div class="p-4">
+
+      <!-- <div class=""> -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
+          <h2 class="text-2xl font-bold">Cités</h2>
+
+          <!-- Champ de recherche -->
+          <div class="flex items-center gap-2">
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher une cité..."
+              class="border border-gray-300 rounded-md px-3 py-1 text-sm w-full md:w-72 shadow-sm" />
+          </div>
+        </div>
+
+        <!-- Header de la liste -->
+        <div
+          class="bggray  sticky  max-h-[calc(100vh-10.5rem)] min-h-[calc(100vh-10.5rem)] overflow-y-auto scrollbar-custom">
+
+
+          <div class="flex pt-4 px-2 md:px-4 justify-between items-center mb-6 flex-wrap gap-4 sticky top-0 bggray z-10 ">
+            <div class="flex items-center gap-3">
+              <h3 class="text-lg font-semibold">Liste des cités</h3>
+              <span class="bg-blue-600 text-white text-sm font-bold px-2 py-1 rounded-full">0{{ cites.length }}</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-1 md:flex md:items-center md:gap-3">
+              <!-- Toggle vue tableau ou grille -->
+              <div class="flex gap-2">
+                <button (click)="viewMode = 'table'" [ngClass]="{ 'principal_button': viewMode === 'table' }"
+                  class="p-2 rounded-md border w-10">
+                  <i class="fas fa-bars"></i>
+                </button>
+                <button (click)="viewMode = 'grid'" [ngClass]="{ 'principal_button': viewMode === 'grid' }"
+                  class="p-2 rounded-md border w-10">
+                  <i class="fas fa-th-large"></i>
+                </button>
+              </div>
+
+              <!-- Trier -->
+              <div class="flex items-center gap-2">
+                <span class="text-sm">Trier par</span>
+                <select class="border rounded-md px-2 py-1 text-sm">
+                  <option>Date (le moins récent)</option>
+                  <option>Date (le plus récent)</option>
+                  <option>Nombre de chambres</option>
+                </select>
+              </div>
+
+              <button class="principal_button px-4 py-2 rounded flex items-center gap-2">
+                <i class="fas fa-plus"></i> Ajouter
+              </button>
+            </div>
+          </div>
+
+          <!-- Mode Grille -->
+          @if (viewMode === 'grid') {
+          <div class="grid px-2 md:px-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            @for (cite of cites; track $index) {
+            <div [routerLink]="['/details-cites', $index ]" class=" rounded-lg shadow p-4" style="cursor: pointer;">
+              <img [src]="cite.image" class="rounded-md h-40 w-full object-cover mb-3" alt="Image cité">
+              <h4 class="font-bold text-lg">{{ cite.nom }}</h4>
+              <p class="text-sm text-gray-500">{{ cite.nombreChambres }} chambres</p>
+              <p class="text-sm mt-2 text-teal-600 font-bold">
+                {{ cite.prixMensuel | number }} FCFA / mois
+                <span class="text-gray-500 font-normal"> ~ {{ cite.prixAnnuel | number }} FCFA / 12 mois</span>
+              </p>
+              <p class="text-xs mt-2 text-gray-500">Date d’ajout : {{ cite.dateAjout | date:'dd/MM/yyyy' }}</p>
+              <p class="text-xs text-gray-500">Date de dernière modification : {{ cite.maj | date:'dd/MM/yyyy' }}</p>
+            </div>}
+          </div>}
+
+          <!-- Mode Tableau -->
+          @if (viewMode === 'table') {
+          <div class="overflow-x-auto">
+            <table
+              class="min-w-full px-2 md:px-4  rounded-lg overflow-hidden shadow table-auto w-full border-separate border-spacing-y-4">
+              <thead class="bg-gray-100 text-gray-700 text-sm mb-3 ">
+                <tr class="">
+                  <th class="px-4 py-3 text-left border-r">Nom</th>
+                  <th class="px-4 py-3 border-r">Nombre de chambres</th>
+                  <th class="px-4 py-3 border-r">Prix de la chambre</th>
+                  <th class="px-4 py-3 border-r">Date d’ajout</th>
+                  <th class="px-4 py-3 border-r">Dernière modification</th>
+                  <th class="px-4 py-3 text-left ">Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (cite of cites; track $index) {
+                <tr [routerLink]="['/details-cites', $index ]" class="border-b bg-white p-5">
+                  <td class="md:px-4 w-52 md:w-auto p-2 flex items-center gap-2">
+                    <img [src]="cite.image" class="w-10 h-10 rounded-md object-cover" alt="image" />
+                    <span class="">{{ cite.nom }}</span>
+                  </td>
+                  <td class="text-center px-4">{{ cite.nombreChambres }} Chambre(s)</td>
+                  <td class="text-center pr-2">{{ cite.prixMensuel | number }} FCFA / mois</td>
+                  <td class="text-center pr-2">{{ cite.dateAjout | date:'dd.MM.yyyy' }}</td>
+                  <td class="text-center pr-2">{{ cite.maj | date:'dd.MM.yyyy' }}</td>
+                  <td>
+                    <button class="bg-yellow-400 text-white p-2 rounded-md mr-3"><i class="fas fa-edit"></i></button>
+                    <button class="bg-red-600 text-white p-2 rounded-md"><i class="fas fa-trash-alt"></i></button>
+                  </td>
+                </tr>}
+              </tbody>
+            </table>
+          </div>
+          }
+
+
+        </div>
+      <!-- </div> -->
+
+
+  </div>
+
+</main>
+

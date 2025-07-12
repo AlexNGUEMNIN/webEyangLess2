@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { CiteService } from '../../../services/cite/cite.service';
 
 interface Photo {
   id: number;
@@ -16,14 +17,8 @@ interface Photo {
   styleUrl: './detail-city.component.scss'
 })
 export class DetailCityComponent {
-
+  city: any;
   currentImageIndex = 0;
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-  }
-
   photos: Photo[] = [
     {
       id: 1,
@@ -52,6 +47,37 @@ export class DetailCityComponent {
       additionalPhotos: 7
     }
   ];
+  isLoading: boolean = false;
+
+  constructor(private router: Router, private activeRoute: ActivatedRoute,
+    private citeService: CiteService
+  ) { }
+
+  ngOnInit(): void {
+    this.getOneCity();
+  }
+
+
+  // Récupérer les informations d'une cité
+  getOneCity(){
+    let id: any = this.activeRoute.snapshot.paramMap.get('id');
+    console.log(id);
+    this.isLoading = true;
+    this.citeService.getOneCity(id).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        if(res.success == true ){
+          this.city = res.data;
+          console.log(this.city);
+        }else{
+          console.error("Cité introuvable");
+        }
+      }, error: (err) => {
+        this.isLoading = false;
+        console.error("Erreur lors de la récupération de la cité", err);
+      }
+    })
+  }
 
   onPhotoClick(photo: Photo): void {
     console.log('Photo clicked:', photo);
@@ -65,5 +91,14 @@ export class DetailCityComponent {
 
   onReserve(): void {
     this.router.navigate(['/website/room-selection']);
+  }
+
+  parseCamelCaseToLabel(text: string): string {
+    if (!text) return '';
+
+    return text
+      .replace(/([A-Z])/g, ' $1')     // Ajoute un espace avant chaque majuscule
+      .replace(/^./, char => char.toUpperCase()) // Met la première lettre en majuscule
+      .trim();
   }
 }

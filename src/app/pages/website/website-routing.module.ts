@@ -5,6 +5,10 @@ import { CitiesComponent } from "./cities/cities.component";
 import { AproposComponent } from "./apropos/apropos.component";
 import { WebsiteComponent } from "./website-component/website.component";
 import { DetailCityComponent } from "./detail-city/detail-city.component";
+import { BecomeBailleurComponent } from "../bailleur/become-bailleur/become-bailleur.component";
+import { CreateCityComponent } from "../bailleur/create-city/create-city.component";
+import { MyCitiesComponent } from "../bailleur/my-cities/my-cities.component";
+import { MapComponent } from "../map/map.component";
 import { RoomSelectionComponent } from "./room-selection/room-selection.component";
 import { PaymentReservationComponent } from "./payment-reservation/payment-reservation.component";
 import { PaymentVerificationComponent } from "./payment-verification/payment-verification.component";
@@ -30,7 +34,7 @@ const website_routes : Routes = [
         component: CitiesComponent
       },
       {
-        path: "detail-city",
+        path: "detail-city/:id",
         component: DetailCityComponent
       },
       {
@@ -59,14 +63,22 @@ const website_routes : Routes = [
       },
 
       // Ce qui concerne le bailleur
-      // {
-      //   path: 'become-bailleur',
-      //   component: BecomeBailleurComponent
-      // },
-      // {
-      //   path: 'create',
-      //   component: CreateCityComponent
-      // },
+      {
+        path: 'become-bailleur',
+        component: BecomeBailleurComponent
+      },
+      {
+        path: 'create',
+        component: CreateCityComponent
+      },
+      {
+        path: 'my-cities',
+        component: MyCitiesComponent
+      },
+      {
+        path: 'map',
+        component: MapComponent
+      }
     ]
   },
 

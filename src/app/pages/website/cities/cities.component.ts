@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { CardCiteComponent } from '../../../Component/website/card-cite/card-cite.component';
 import { Router } from '@angular/router';
+import { CiteService } from '../../../services/cite/cite.service';
 
 export interface Filters {
   wifi: boolean;
@@ -20,49 +21,20 @@ export interface Filters {
 })
 export class CitiesComponent {
   // Données
-  cities = [
-    {
-      id: 1,
-      name: 'Cité Belvira',
-      price: 55000,
-      currency: 'FCFA',
-      period: 'mois',
-      location: 'Cité Belvira',
-      distance: 'Située à 0,2 km du campus',
-      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
-    },
-    {
-      id: 2,
-      name: 'Cité Digital City',
-      price: 60000,
-      currency: 'FCFA',
-      period: 'mois',
-      location: 'Cité Digital City',
-      distance: 'Située à 0,7 km du campus',
-      image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
-    },
-    {
-      id: 3,
-      name: 'Cité Shekinah',
-      price: 90000,
-      currency: 'FCFA',
-      period: 'mois',
-      location: 'Cité Shekinah',
-      distance: 'Située à 0,8 km du campus',
-      image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
-    },
-    {
-      id: 4,
-      name: 'Cité Digitale 2',
-      price: 60000,
-      currency: 'FCFA',
-      period: 'mois',
-      location: 'Cité Digitale 2',
-      distance: 'Située à 0,8 km du campus',
-      image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
-    }
-  ];
-
+  // cities: any[] = [
+    // {
+    //   id: 1,
+    //   name: 'Cité Belvira',
+    //   price: 55000,
+    //   currency: 'FCFA',
+    //   period: 'mois',
+    //   location: 'Cité Belvira',
+    //   distance: 'Située à 0,2 km du campus',
+    //   image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+    // },
+    
+  // ];
+  cities: any[] = [];
   filteredCities: any[] = [];
 
   // État des filtres
@@ -86,12 +58,15 @@ export class CitiesComponent {
   private searchSubject = new Subject<string>();
   private destroy$ = new Subject<void>();
 
-  constructor(private router: Router){
-
+  constructor(private router: Router,
+    private citeService: CiteService
+  ){
+    
   }
 
   ngOnInit(): void {
-    this.filteredCities = [...this.cities];
+    this.getCities();
+    // this.filteredCities = [...this.cities];
     this.setupSearchDebounce();
   }
 
@@ -100,6 +75,25 @@ export class CitiesComponent {
     this.destroy$.complete();
   }
 
+  // Récupérer la liste des cités
+  getCities(){
+    this.loading = true;
+    this.citeService.getCities(0, 12).subscribe({
+      next: (res) => {
+        this.loading = false;
+        console.log(res);
+        this.cities = res.data.content; // selon ce que renvoie le backend
+        // this.totalItems = res.totalElements || res.total || 0;
+        console.log(this.cities);
+        this.filteredCities = this.cities;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error("Erreur de récupération des cités :", err);
+      }
+    });
+  }
+  
   private setupSearchDebounce(): void {
     this.searchSubject.pipe(
       debounceTime(300),
@@ -303,7 +297,7 @@ export class CitiesComponent {
   // Actions
   viewDetails(city: any): void {
     console.log('Voir détails de:', city);
-    this.router.navigate(['/website/detail-city']);
+    this.router.navigate([`/website/detail-city/${city.id}`]);
     // Implémenter la navigation vers la page détail
     // this.router.navigate(['/cities', city.id]);
   }

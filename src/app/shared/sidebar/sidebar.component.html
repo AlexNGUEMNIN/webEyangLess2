@@ -1,0 +1,35 @@
+<!-- Overlay mobile -->
+<div
+  class="fixed inset-0 bg-black/60 z-30 lg:hidden"
+  *ngIf="isOpen"
+  (click)="emitClose()"
+></div>
+
+<!-- Sidebar -->
+<aside
+  class="fixed top-0 left-0 z-40 w-64 h-screen text-white flex flex-col justify-between py-6 px-4 transform transition-transform duration-300
+         -translate-x-full lg:translate-x-0"
+  [class.translate-x-0]="isOpen"
+  style="background-color: var(--primary-color);"
+>
+  <div>
+    <img src="./assets/images/logo blanc.png" class="mb-4" alt="Logo de l'application">
+    <nav class="flex flex-col gap-2">
+      @for (route of donnesSlidebar; track $index) {
+      <a [routerLink]="route.url" [ngClass]="{'active' : isActive(route.url)}" class="flex items-center gap-2 px-4 py-2 hover:bg-teal-700"><i [class]="route.icon"></i> {{route.title}}</a>
+      }
+      <!-- <a href="#" class="flex items-center gap-2 px-4 py-2 active"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+      <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-teal-700 rounded"><i class="fas fa-city"></i> Cités</a>
+      <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-teal-700 rounded"><i class="fas fa-map"></i> Carte</a>
+      <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-teal-700 rounded"><i class="fas fa-users"></i> Utilisateurs</a>
+      <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-teal-700 rounded"><i class="fas fa-user-cog"></i> Mon compte</a>
+      <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-teal-700 rounded"><i class="fas fa-cogs"></i> Paramètres</a> -->
+    </nav>
+  </div>
+  <div>
+    <button class="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded w-full">
+      <i class="fas fa-sign-out-alt"></i> Déconnexion
+    </button>
+    <p class="mt-4 text-sm text-center">EyangLess • Version 1.0</p>
+  </div>
+</aside>

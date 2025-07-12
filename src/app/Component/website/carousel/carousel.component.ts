@@ -1,81 +1,109 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CarouselImage } from '../../../models/cacrouselImage';
+import { SearchForm } from '../../../models/SearchForm';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [ CommonModule, FormsModule ],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss'
 })
 export class CarouselComponent implements OnInit, OnDestroy {
   currentSlide = 0;
-  autoSlideInterval: any;
+  private intervalId: any;
 
-  slides = [
+  searchForm: SearchForm = {
+    locality: '',
+    budget: '',
+    roomType: ''
+  };
+
+  carouselImages: CarouselImage[] = [
     {
-      id: 1,
-      title: 'Trouvez votre chambre idéale',
-      subtitle: 'Des milliers de chambres disponibles',
-      description: 'Découvrez notre large sélection de chambres universitaires dans toute la ville d\'Eyang',
-      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-      cta: 'Commencer la recherche'
+      url: 'assets/images/image1.jpg',
+      alt: 'Maison moderne avec piscine'
     },
     {
-      id: 2,
-      title: 'Réservation simple et sécurisée',
-      subtitle: 'En quelques clics seulement',
-      description: 'Réservez votre chambre en toute sécurité avec notre système de paiement mobile intégré',
-      image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-      cta: 'Voir comment ça marche'
+      url: 'assets/images/image2.jpg',
+      alt: 'Résidence étudiante'
     },
     {
-      id: 3,
-      title: 'Support 24/7',
-      subtitle: 'Nous sommes là pour vous',
-      description: 'Notre équipe est disponible pour vous accompagner dans votre recherche de logement',
-      image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-      cta: 'Nous contacter'
+      url: 'assets/images/image3.jpg',
+      alt: 'Chambre moderne'
     }
   ];
 
-  ngOnInit(): void {
-    this.startAutoSlide();
+  // popularCities: PopularCity[] = [
+  //   {
+  //     id: 1,
+  //     name: 'Cité Belvira',
+  //     price: 55000,
+  //     currency: 'FCFA',
+  //     period: 'mois',
+  //     location: 'Cité Belvira',
+  //     distance: 'Située à 0,2 km du campus',
+  //     image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Cité Digital City',
+  //     price: 60000,
+  //     currency: 'FCFA',
+  //     period: 'mois',
+  //     location: 'Cité Digital City',
+  //     distance: 'Située à 0,7 km du campus',
+  //     image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Cité Shekinah',
+  //     price: 90000,
+  //     currency: 'FCFA',
+  //     period: 'mois',
+  //     location: 'Cité Shekinah',
+  //     distance: 'Située à 0,8 km du campus',
+  //     image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+  //   }
+  // ];
+
+  ngOnInit() {
+    this.startCarousel();
   }
 
-  ngOnDestroy(): void {
-    this.stopAutoSlide();
-  }
-
-  startAutoSlide(): void {
-    this.autoSlideInterval = setInterval(() => {
-      this.nextSlide();
-    }, 5000);
-  }
-
-  stopAutoSlide(): void {
-    if (this.autoSlideInterval) {
-      clearInterval(this.autoSlideInterval);
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
     }
   }
 
-  nextSlide(): void {
-    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+  startCarousel() {
+    this.intervalId = setInterval(() => {
+      this.nextSlide();
+    }, 5000); // Change slide every 5 seconds
   }
 
-  prevSlide(): void {
-    this.currentSlide = this.currentSlide === 0 ? this.slides.length - 1 : this.currentSlide - 1;
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.carouselImages.length;
   }
 
-  goToSlide(index: number): void {
+  goToSlide(index: number) {
     this.currentSlide = index;
+    // Reset the interval when user manually changes slide
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.startCarousel();
+    }
   }
 
-  onMouseEnter(): void {
-    this.stopAutoSlide();
+  onSearch() {
+    console.log('Recherche:', this.searchForm);
+    // Implement search logic here
   }
 
-  onMouseLeave(): void {
-    this.startAutoSlide();
+  isActive(index: number): boolean {
+    return this.currentSlide === index;
   }
 }
