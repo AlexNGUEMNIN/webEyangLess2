@@ -14,6 +14,7 @@ import { PaymentReservationComponent } from "./payment-reservation/payment-reser
 import { PaymentVerificationComponent } from "./payment-verification/payment-verification.component";
 import { PaymentSuccessComponent } from "./payment-success/payment-success.component";
 import { PaymentFailedComponent } from "./payment-failed/payment-failed.component";
+import { MyAccountComponent } from "./my-account/my-account.component";
 
 
 
@@ -60,6 +61,10 @@ const website_routes : Routes = [
       {
         path: "apropos",
         component: AproposComponent
+      },
+      {
+        path: "my-account",
+        component: MyAccountComponent
       },
 
       // Ce qui concerne le bailleur

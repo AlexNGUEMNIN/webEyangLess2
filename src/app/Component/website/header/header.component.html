@@ -65,6 +65,13 @@
               Mon compte
             </a>
             <a
+              [routerLink]="['/website/my-account']"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              (click)="showUserMenu = false"
+            >
+              Mon compte
+            </a>
+            <a
               href="#"
               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               (click)="logout(); showUserMenu = false"

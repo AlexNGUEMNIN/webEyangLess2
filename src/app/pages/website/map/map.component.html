@@ -1,1 +1,232 @@
-<p>map works!</p>
+<!-- Page Carte Interactive -->
+<div class="map-container">
+  <!-- Barre de recherche en haut à droite -->
+  <div class="search-container">
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInput()"
+        (focus)="showSuggestions = true"
+        placeholder="Rechercher une cité"
+        class="search-input"
+      />
+      <button class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+      
+      <!-- Suggestions de recherche -->
+      <div class="suggestions-dropdown" *ngIf="showSuggestions && suggestions.length > 0">
+        <div 
+          *ngFor="let suggestion of suggestions; trackBy: trackBySuggestion"
+          class="suggestion-item"
+          (click)="selectSuggestion(suggestion)"
+          (mouseenter)="highlightMarker(suggestion)"
+        >
+          <div class="suggestion-icon">
+            <i [class]="getSuggestionIcon(suggestion.type)"></i>
+          </div>
+          <div class="suggestion-content">
+            <div class="suggestion-name">{{ suggestion.name }}</div>
+            <div class="suggestion-address">{{ suggestion.address }}</div>
+            <div class="suggestion-distance" *ngIf="suggestion.distance">
+              {{ suggestion.distance }} • {{ suggestion.walkTime }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carte Leaflet -->
+  <div id="map" class="map-element"></div>
+
+  <!-- Panel détail lieu (gauche) -->
+  <div class="detail-panel" [class.open]="selectedPlace" *ngIf="selectedPlace">
+    <div class="panel-header">
+      <button class="close-button" (click)="closeDetailPanel()">
+        <i class="fas fa-times"></i>
+      </button>
+      
+      <div class="place-image" *ngIf="selectedPlace.image">
+        <img [src]="selectedPlace.image" [alt]="selectedPlace.name" />
+      </div>
+      
+      <div class="place-header">
+        <h2 class="place-name">{{ selectedPlace.name }}</h2>
+        <div class="place-rating" *ngIf="selectedPlace.rating">
+          <div class="stars">
+            <i *ngFor="let star of getStars(selectedPlace.rating)" 
+               [class]="star.class"></i>
+          </div>
+          <span class="rating-value">{{ selectedPlace.rating }}</span>
+        </div>
+        <div class="verified-badge" *ngIf="selectedPlace.verified">
+          <i class="fas fa-check-circle"></i>
+          Vérifié
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-content">
+      <!-- Informations principales -->
+      <div class="info-section">
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div class="info-content">
+            <div class="info-label">Adresse</div>
+            <div class="info-value copyable" (click)="copyToClipboard(selectedPlace.address)">
+              {{ selectedPlace.address }}
+            </div>
+          </div>
+        </div>
+
+        <div class="info-item" *ngIf="selectedPlace.category">
+          <i class="fas fa-tag"></i>
+          <div class="info-content">
+            <div class="info-label">Catégorie</div>
+            <div class="info-value">{{ selectedPlace.category }}</div>
+          </div>
+        </div>
+
+        <div class="info-item" *ngIf="selectedPlace.coordinates">
+          <i class="fas fa-crosshairs"></i>
+          <div class="info-content">
+            <div class="info-label">Coordonnées GPS</div>
+            <div class="info-value">
+              {{ selectedPlace.coordinates.lat.toFixed(6) }}, {{ selectedPlace.coordinates.lng.toFixed(6) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="info-item" *ngIf="selectedPlace.hours">
+          <i class="fas fa-clock"></i>
+          <div class="info-content">
+            <div class="info-label">Horaires</div>
+            <div class="info-value">{{ selectedPlace.hours }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métriques de distance -->
+      <div class="distance-section" *ngIf="userLocation">
+        <h3>Distance depuis votre position</h3>
+        <div class="distance-metrics">
+          <div class="metric-item">
+            <i class="fas fa-route"></i>
+            <div class="metric-content">
+              <div class="metric-label">Distance</div>
+              <div class="metric-value">{{ selectedPlace.distanceFromUser }}</div>
+            </div>
+          </div>
+          
+          <div class="metric-item">
+            <i class="fas fa-walking"></i>
+            <div class="metric-content">
+              <div class="metric-label">À pied</div>
+              <div class="metric-value">{{ selectedPlace.walkTime }}</div>
+            </div>
+          </div>
+          
+          <div class="metric-item">
+            <i class="fas fa-bicycle"></i>
+            <div class="metric-content">
+              <div class="metric-label">À vélo</div>
+              <div class="metric-value">{{ selectedPlace.bikeTime }}</div>
+            </div>
+          </div>
+          
+          <div class="metric-item">
+            <i class="fas fa-car"></i>
+            <div class="metric-content">
+              <div class="metric-label">En voiture</div>
+              <div class="metric-value">{{ selectedPlace.carTime }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions d'itinéraire -->
+      <div class="route-section" *ngIf="currentRoute">
+        <h3>Itinéraire</h3>
+        
+        <!-- Sélecteur de mode de transport -->
+        <div class="transport-selector">
+          <button 
+            *ngFor="let mode of transportModes"
+            [class.active]="selectedTransportMode === mode.id"
+            (click)="changeTransportMode(mode.id)"
+            class="transport-button"
+          >
+            <i [class]="mode.icon"></i>
+            {{ mode.label }}
+          </button>
+        </div>
+
+        <!-- Résumé de l'itinéraire -->
+        <div class="route-summary">
+          <div class="summary-item">
+            <span class="summary-label">Distance totale:</span>
+            <span class="summary-value">{{ currentRoute.totalDistance }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Temps estimé:</span>
+            <span class="summary-value">{{ currentRoute.totalTime }}</span>
+          </div>
+        </div>
+
+        <!-- Instructions détaillées -->
+        <div class="route-instructions">
+          <div 
+            *ngFor="let instruction of currentRoute.instructions; trackBy: trackByInstruction"
+            class="instruction-item"
+          >
+            <div class="instruction-icon">
+              <i [class]="getInstructionIcon(instruction.type)"></i>
+            </div>
+            <div class="instruction-content">
+              <div class="instruction-text">{{ instruction.text }}</div>
+              <div class="instruction-distance">{{ instruction.distance }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="action-buttons">
+        <button 
+          class="btn btn-primary"
+          (click)="calculateRoute()"
+          [disabled]="!userLocation || routeLoading"
+        >
+          <i class="fas fa-route" *ngIf="!routeLoading"></i>
+          <i class="fas fa-spinner fa-spin" *ngIf="routeLoading"></i>
+          {{ routeLoading ? 'Calcul...' : 'Voir l\'itinéraire' }}
+        </button>
+        
+        <button class="btn btn-secondary" (click)="sharePlace()">
+          <i class="fas fa-share-alt"></i>
+          Partager
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contrôles de carte -->
+  <div class="map-controls">
+    <button class="control-button" (click)="centerOnUser()" [disabled]="!userLocation">
+      <i class="fas fa-location-arrow"></i>
+    </button>
+    <button class="control-button" (click)="toggleFullscreen()">
+      <i class="fas fa-expand"></i>
+    </button>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay" *ngIf="mapLoading">
+    <div class="loading-content">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Chargement de la carte...</p>
+    </div>
+  </div>
+</div>

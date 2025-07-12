@@ -1,0 +1,344 @@
+<!-- Page Mon Compte -->
+<div class="account-container">
+  <div class="account-header">
+    <h1 class="page-title">Mon Compte</h1>
+  </div>
+
+  <div class="account-content">
+    <!-- Colonne gauche - Profil utilisateur -->
+    <div class="profile-section">
+      <!-- Photo de profil -->
+      <div class="profile-photo-container">
+        <div class="profile-photo" (click)="triggerFileInput()">
+          <img 
+            *ngIf="user.profilePhoto" 
+            [src]="user.profilePhoto" 
+            [alt]="user.fullName"
+            class="profile-image"
+          />
+          <div *ngIf="!user.profilePhoto" class="profile-initials">
+            {{ getInitials(user.fullName) }}
+          </div>
+          <div class="edit-overlay">
+            <i class="fas fa-camera"></i>
+          </div>
+        </div>
+        <input 
+          #fileInput 
+          type="file" 
+          accept="image/*" 
+          (change)="onProfilePhotoChange($event)"
+          style="display: none"
+        />
+      </div>
+
+      <!-- Informations personnelles -->
+      <div class="profile-info">
+        <h2 class="profile-name">{{ user.fullName }}</h2>
+        <span class="profile-status">{{ user.status }}</span>
+      </div>
+
+      <!-- Formulaire d'informations -->
+      <div class="info-form">
+        <div class="form-group">
+          <label class="form-label">Téléphone</label>
+          <div class="input-container">
+            <input 
+              type="tel"
+              [(ngModel)]="editableUser.phone"
+              [disabled]="!editMode"
+              class="form-input"
+              [class.editable]="editMode"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <div class="input-container">
+            <input 
+              type="email"
+              [(ngModel)]="editableUser.email"
+              [disabled]="!editMode"
+              class="form-input"
+              [class.editable]="editMode"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <div class="input-container">
+            <input 
+              type="password"
+              value="••••••••••••••••"
+              disabled
+              class="form-input"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="action-buttons">
+        <button 
+          *ngIf="!editMode"
+          class="btn btn-primary"
+          (click)="enableEditMode()"
+        >
+          Modifier les informations
+        </button>
+
+        <div *ngIf="editMode" class="edit-buttons">
+          <button 
+            class="btn btn-secondary"
+            (click)="cancelEdit()"
+          >
+            Annuler
+          </button>
+          <button 
+            class="btn btn-primary"
+            (click)="saveChanges()"
+            [disabled]="!isFormValid() || saving"
+          >
+            <i *ngIf="saving" class="fas fa-spinner fa-spin"></i>
+            {{ saving ? 'Sauvegarde...' : 'Sauvegarder' }}
+          </button>
+        </div>
+
+        <button 
+          class="btn btn-outline"
+          (click)="openPasswordModal()"
+        >
+          Modifier le mot de passe
+        </button>
+      </div>
+    </div>
+
+    <!-- Colonne droite - Réservations et bails -->
+    <div class="reservations-section">
+      <!-- Mes réservations -->
+      <div class="section-block">
+        <h3 class="section-title">Mes réservations</h3>
+        
+        <div *ngIf="reservations.length === 0" class="empty-state">
+          <i class="fas fa-calendar-times"></i>
+          <p>Aucune réservation en cours</p>
+        </div>
+
+        <div *ngFor="let reservation of reservations; trackBy: trackByReservation" class="reservation-card">
+          <div class="card-header">
+            <div class="location-info">
+              <i class="fas fa-map-marker-alt"></i>
+              <h4 class="location-name">{{ reservation.locationName }}</h4>
+            </div>
+            <span 
+              class="status-badge"
+              [class]="getStatusClass(reservation.status)"
+            >
+              {{ reservation.status }}
+            </span>
+          </div>
+
+          <div class="card-content">
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Montant du bail</span>
+                <span class="info-value">{{ formatPrice(reservation.amount) }} FCFA</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Durée du bail</span>
+                <span class="info-value">{{ reservation.duration }} mois</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Chambre</span>
+                <span class="info-value">{{ reservation.room }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Date</span>
+                <span class="info-value">{{ formatDate(reservation.date) }}</span>
+              </div>
+            </div>
+
+            <button class="details-link" (click)="viewReservationDetails(reservation)">
+              Voir les détails
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bail en cours -->
+      <div class="section-block">
+        <h3 class="section-title">Bail en cours</h3>
+        
+        <div *ngIf="activeBails.length === 0" class="empty-state">
+          <i class="fas fa-home"></i>
+          <p>Aucun bail actif</p>
+        </div>
+
+        <div *ngFor="let bail of activeBails; trackBy: trackByBail" class="bail-card">
+          <div class="card-header">
+            <div class="location-info">
+              <i class="fas fa-building"></i>
+              <h4 class="location-name">{{ bail.locationName }}</h4>
+            </div>
+            <span class="status-badge status-active">Actif</span>
+          </div>
+
+          <div class="card-content">
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Montant du bail</span>
+                <span class="info-value">{{ formatPrice(bail.amount) }} FCFA</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Durée du bail</span>
+                <span class="info-value">{{ bail.duration }} mois</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Chambre</span>
+                <span class="info-value">{{ bail.room }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Date début</span>
+                <span class="info-value">{{ formatDate(bail.startDate) }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Date fin</span>
+                <span class="info-value">{{ formatDate(bail.endDate) }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Caution</span>
+                <span class="info-value">{{ bail.deposit }} mois</span>
+              </div>
+            </div>
+
+            <!-- Indicateur de temps restant -->
+            <div class="time-remaining" *ngIf="bail.daysRemaining">
+              <div class="progress-bar">
+                <div 
+                  class="progress-fill"
+                  [style.width.%]="getProgressPercentage(bail)"
+                ></div>
+              </div>
+              <span class="remaining-text">
+                {{ bail.daysRemaining }} jours restants
+              </span>
+            </div>
+
+            <button class="details-link" (click)="viewBailDetails(bail)">
+              Voir les détails
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal changement de mot de passe -->
+<div class="modal-overlay" *ngIf="showPasswordModal" (click)="closePasswordModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Modifier le mot de passe</h3>
+      <button class="close-button" (click)="closePasswordModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Mot de passe actuel</label>
+        <input 
+          type="password"
+          [(ngModel)]="passwordForm.currentPassword"
+          class="form-input"
+          placeholder="Entrez votre mot de passe actuel"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nouveau mot de passe</label>
+        <input 
+          type="password"
+          [(ngModel)]="passwordForm.newPassword"
+          class="form-input"
+          placeholder="Entrez votre nouveau mot de passe"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirmer le nouveau mot de passe</label>
+        <input 
+          type="password"
+          [(ngModel)]="passwordForm.confirmPassword"
+          class="form-input"
+          placeholder="Confirmez votre nouveau mot de passe"
+        />
+      </div>
+
+      <!-- Indicateur de force du mot de passe -->
+      <div class="password-strength" *ngIf="passwordForm.newPassword">
+        <div class="strength-bar">
+          <div 
+            class="strength-fill"
+            [class]="getPasswordStrengthClass()"
+            [style.width.%]="getPasswordStrengthPercentage()"
+          ></div>
+        </div>
+        <span class="strength-text">{{ getPasswordStrengthText() }}</span>
+      </div>
+
+      <div class="password-requirements">
+        <p class="requirements-title">Le mot de passe doit contenir :</p>
+        <ul class="requirements-list">
+          <li [class.valid]="hasMinLength()">
+            <i [class]="hasMinLength() ? 'fas fa-check' : 'fas fa-times'"></i>
+            Au moins 8 caractères
+          </li>
+          <li [class.valid]="hasUppercase()">
+            <i [class]="hasUppercase() ? 'fas fa-check' : 'fas fa-times'"></i>
+            Une lettre majuscule
+          </li>
+          <li [class.valid]="hasLowercase()">
+            <i [class]="hasLowercase() ? 'fas fa-check' : 'fas fa-times'"></i>
+            Une lettre minuscule
+          </li>
+          <li [class.valid]="hasNumber()">
+            <i [class]="hasNumber() ? 'fas fa-check' : 'fas fa-times'"></i>
+            Un chiffre
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closePasswordModal()">
+        Annuler
+      </button>
+      <button 
+        class="btn btn-primary"
+        (click)="changePassword()"
+        [disabled]="!isPasswordFormValid() || changingPassword"
+      >
+        <i *ngIf="changingPassword" class="fas fa-spinner fa-spin"></i>
+        {{ changingPassword ? 'Modification...' : 'Modifier' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notifications -->
+<div class="toast-container">
+  <div 
+    *ngFor="let toast of toasts; trackBy: trackByToast"
+    class="toast"
+    [class]="getToastClass(toast.type)"
+  >
+    <i [class]="getToastIcon(toast.type)"></i>
+    <span>{{ toast.message }}</span>
+    <button class="toast-close" (click)="removeToast(toast)">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
